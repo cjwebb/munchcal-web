@@ -1,0 +1,22 @@
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 100px; /* must match footer height */
+    padding-top: 40px; /* must be greater than nav height */
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 80px;
+}
+
+.footer .container {
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+

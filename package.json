@@ -1,0 +1,28 @@
+{
+  "name": "munchcal-web",
+  "version": "0.0.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/cjwebb/munchcal-web.git"
+  },
+  "dependencies": {
+    "express": "4.x",
+    "body-parser": "1.x",
+    "express-session": "1.11.1",
+    "express-secure-handlebars": "1.2.1",
+    "express-validator": "2.9.0",
+    "connect-flash": "^0.1.1",
+    "request": "2.54.0",
+    "moment": "2.9.0",
+    "passport": "0.2.1",
+    "passport-local": "1.0.0",
+    "pg": "4.3.0",
+    "node-uuid": "1.4.2",
+    "bcrypt": "0.8.2"
+  },
+  "devDependencies": {
+    "gulp": "^3.8.11",
+    "gulp-jshint": "^1.10.0",
+    "gulp-nodemon": "^2.0.2"
+  }
+}
