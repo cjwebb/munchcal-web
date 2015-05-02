@@ -8,8 +8,8 @@
         <button type="button" class="btn btn-default">Edit</button>
     </div>
     <div class="btn-group" role="group">
-        <button type="button" class="btn btn-default">Previous</button>
-        <button type="button" class="btn btn-default">Next</button>
+        <a href="/meals/{{pagination.previous}}" type="button" class="btn btn-default">Previous</a>
+        <a href="/meals/{{pagination.next}}" type="button" class="btn btn-default">Next</a>
     </div>
 </div>
 
@@ -18,7 +18,7 @@
     <div class="row">
         <div class="col-md-12">
             {{#each food}}
-                <p>{{formatWho who}} - {{formatWhat what}}</p>
+                <p>{{who}} - {{what}}</p>
             {{/each}}
         </div>
     </div>

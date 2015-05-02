@@ -6,19 +6,20 @@
     "url": "https://github.com/cjwebb/munchcal-web.git"
   },
   "dependencies": {
-    "express": "4.x",
+    "bcrypt": "0.8.2",
     "body-parser": "1.x",
-    "express-session": "1.11.1",
-    "express-secure-handlebars": "1.2.1",
-    "express-validator": "2.9.0",
     "connect-flash": "^0.1.1",
-    "request": "2.54.0",
+    "express": "4.x",
+    "express-secure-handlebars": "1.2.1",
+    "express-session": "1.11.1",
+    "express-validator": "2.9.0",
+    "lodash": "3.7.0",
     "moment": "2.9.0",
+    "node-uuid": "1.4.2",
     "passport": "0.2.1",
     "passport-local": "1.0.0",
     "pg": "4.3.0",
-    "node-uuid": "1.4.2",
-    "bcrypt": "0.8.2"
+    "request": "2.54.0"
   },
   "devDependencies": {
     "gulp": "^3.8.11",

@@ -18,4 +18,5 @@ Running this project requires environment variables to be set. Environment varia
     export MUNCHCAL_PG_CONNECTION_STRING="postgres://username:password@localhost/database"
     export MUNCHCAL_SESSION_SECRET="keyboard cat"
     export MUNCHCAL_BCRYPT_WORK_FACTOR=10
+    export MUNCHCAL_API_URL="http://localhost:10000"
 

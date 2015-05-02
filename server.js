@@ -11,6 +11,7 @@ var express      = require('express'),
     passport     = require('passport'),
     strategy     = require('passport-local').Strategy,
     pg           = require('pg'),
+    _            = require('lodash'),
     app          = express();
 
 var db           = require('./app/db');
@@ -30,15 +31,7 @@ var hbs = exphbs.create({
     helpers: {
         "formatDate": function(format, datetime) {
             return moment(datetime.fn(this), "YYYY-MM-DD").format(format);
-        },
-        "formatWho": function(people){
-            var names = [];
-            for(var p of people) {
-                names.push(p.name);
-            }
-            return formatReadable(names);
-        },
-        "formatWhat": function(x){ return formatReadable(x); }
+        }
     }
 });
 
@@ -69,9 +62,6 @@ var checkAuthentication = function(req, res, next) {
     }
 };
 
-// some state that should end up in a database
-var calendarState = {"start":"2015-04-20","end":"2015-04-24","days":[{"date":"2015-04-20","food":[{"who":[{"id":"1","name":"Colin"}],"whoElse":0,"what":["Peppered Chicken","Avocado","Spinach"]},{"who":[{"id":"2","name":"Maryanne"}],"whoElse":0,"what":["Soup","Bread"]}]},{"date":"2015-04-21","food":[{"who":[{"id":"1","name":"Colin"},{"id":"2","name":"Maryanne"}],"whoElse":0,"what":["Steak","Mediterranean Veg"]}]},{"date":"2015-04-22","food":[{"who":[{"id":"1","name":"Colin"},{"id":"2","name":"Maryanne"}],"whoElse":0,"what":["Fish","Mixed Veg"]}]},{"date":"2015-04-23","food":[{"who":[{"id":"1","name":"Colin"},{"id":"2","name":"Maryanne"}],"whoElse":0,"what":["Spaghetti Carbonara"]}]},{"date":"2015-04-24","food":[{"who":[{"id":"1","name":"Colin"},{"id":"2","name":"Maryanne"}],"whoElse":4,"what":["Roast Chicken"]}]}],"pagination":{"previous":"2015-04-13","next":"2015-04-27"}};
-
 app.use(express.static(__dirname + '/public'));
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
@@ -91,15 +81,16 @@ app.use(function(req, res, next) {
     next();
 });
 
+var userMealsUrl = function(host, userId) {
+    return host + "/users/" + userId + '/meals'
+};
+
 app.get('/', checkAuthentication, function(req, res){
-//    request.get({url:config.api_url+"/calendar",json:true}, function(err, resp, body){
-//        if (!err && resp.statusCode == 200) {
-//            res.render('home', body);
-//        } else {
-//            res.render('error');
-//        }
-//    });
-    res.render('home', calendarState);
+    var url = userMealsUrl(config.munchcalApiUrl, req.user.id);
+    request.get({ url:url, json:true }, function(err, resp, body){
+        if (err || resp.statusCode != 200) return res.render('error');
+        res.render('home', body);
+    });
 });
 
 // login/logout user

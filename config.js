@@ -11,6 +11,8 @@ var getOrExit = function(valueName) {
 module.exports = {
     pgConnectionString: getOrExit('MUNCHCAL_PG_CONNECTION_STRING'),
     sessionSecret: getOrExit('MUNCHCAL_SESSION_SECRET'),
-    bcryptWorkFactor: getOrExit('MUNCHCAL_BCRYPT_WORK_FACTOR')
+    bcryptWorkFactor: getOrExit('MUNCHCAL_BCRYPT_WORK_FACTOR'),
+    munchcalApiUrl: getOrExit('MUNCHCAL_API_URL'),
+    calendarFormat: 'YYYY-MM-DD'
 };
 
