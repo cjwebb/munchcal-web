@@ -1,6 +1,7 @@
 "use strict"
 
 var express      = require('express'),
+    favicon      = require('serve-favicon'),
     session      = require('express-session'),
     bodyParser   = require('body-parser'),
     exphbs       = require('express-secure-handlebars'),
@@ -11,21 +12,13 @@ var express      = require('express'),
     passport     = require('passport'),
     strategy     = require('passport-local').Strategy,
     pg           = require('pg'),
-    _            = require('lodash'),
     app          = express();
 
 var db           = require('./app/db');
+var routes       = require('./app/routes');
 var config       = require('./config.js');
 
 // handlebars helpers
-var formatReadable = function(arr) {
-    if (arr.length < 2) {
-        return arr
-    } else { 
-        return [arr.slice(0, -1).join(', '), arr.slice(-1)[0]].join(' & ');
-    }
-};
-
 var hbs = exphbs.create({
     defaultLayout: 'main',
     helpers: {
@@ -62,6 +55,7 @@ var checkAuthentication = function(req, res, next) {
     }
 };
 
+app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(express.static(__dirname + '/public'));
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
@@ -81,17 +75,8 @@ app.use(function(req, res, next) {
     next();
 });
 
-var userMealsUrl = function(host, userId) {
-    return host + "/users/" + userId + '/meals'
-};
-
-app.get('/', checkAuthentication, function(req, res){
-    var url = userMealsUrl(config.munchcalApiUrl, req.user.id);
-    request.get({ url:url, json:true }, function(err, resp, body){
-        if (err || resp.statusCode != 200) return res.render('error');
-        res.render('home', body);
-    });
-});
+app.get('/', checkAuthentication, routes.meals.get);
+app.get('/meals/:date', checkAuthentication, routes.meals.get);
 
 // login/logout user
 app.route('/login')
