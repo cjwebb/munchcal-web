@@ -9,6 +9,7 @@ var express      = require('express'),
     flash        = require('connect-flash'),
     request      = require('request'),
     moment       = require('moment'),
+    morgan       = require('morgan'),
     passport     = require('passport'),
     strategy     = require('passport-local').Strategy,
     pg           = require('pg'),
@@ -23,7 +24,7 @@ var hbs = exphbs.create({
     defaultLayout: 'main',
     helpers: {
         "formatDate": function(format, datetime) {
-            return moment(datetime.fn(this), "YYYY-MM-DD").format(format);
+            return moment(datetime.fn(this), config.calendarFormat).format(format);
         }
     }
 });
@@ -57,10 +58,18 @@ var checkAuthentication = function(req, res, next) {
 
 app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(express.static(__dirname + '/public'));
+app.use(morgan('short'));
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(expValidator());
+app.use(expValidator({
+    customValidators: {
+        isCalendarFormat: function(value) {
+            return moment(value, config.calendarFormat, true).isValid();
+        }
+    }
+}));
+//app.use(expValidator());
 app.use(session({ secret: config.sessionSecret,
                   resave: false,
                   saveUninitialized: false }));
@@ -76,7 +85,9 @@ app.use(function(req, res, next) {
 });
 
 app.get('/', checkAuthentication, routes.meals.get);
+app.post('/', checkAuthentication, routes.meals.post);
 app.get('/meals/:date', checkAuthentication, routes.meals.get);
+app.post('/meals/:date', checkAuthentication, routes.meals.post);
 
 // login/logout user
 app.route('/login')

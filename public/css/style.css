@@ -20,3 +20,6 @@ body {
     border-top: 1px solid #eee;
 }
 
+.day-list p.date {
+    font-weight: bold;
+}
