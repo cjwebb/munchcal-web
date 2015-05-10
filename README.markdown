@@ -5,9 +5,9 @@ This project requires a PostgreSQL database running. It requires the following t
 
     create table users (
       id uuid,
-      name varchar(100),
-      email varchar(100),
-      password varchar(100),
+      name text,
+      email text,
+      password text,
       date_created timestamp,
       date_modified timestamp
     );
@@ -19,4 +19,5 @@ Running this project requires environment variables to be set. Environment varia
     export MUNCHCAL_SESSION_SECRET="keyboard cat"
     export MUNCHCAL_BCRYPT_WORK_FACTOR=10
     export MUNCHCAL_API_URL="http://localhost:10000"
+    export MUNCHCAL_PARSER_URL="http://localhost:10010"
 
