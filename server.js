@@ -69,7 +69,6 @@ app.use(expValidator({
         }
     }
 }));
-//app.use(expValidator());
 app.use(session({ secret: config.sessionSecret,
                   resave: false,
                   saveUninitialized: false }));
@@ -93,7 +92,7 @@ app.post('/meals/:date', checkAuthentication, routes.meals.post);
 app.route('/login')
     .get(function(req, res){
         if (req.isAuthenticated()) return res.redirect('/');
-        res.render('login');
+        return res.render('login');
     })
     .post(passport.authenticate('local', { successRedirect: '/',
                                            failureRedirect: '/login',
@@ -101,14 +100,14 @@ app.route('/login')
 
 app.get('/logout', function(req, res){
     req.logout();
-    res.redirect('/');
+    return res.redirect('/');
 });
 
 // register new user
 app.route('/signup')
     .get(function(req, res){
         if (req.isAuthenticated()) return res.redirect('/');
-        res.render('signup');
+        return res.render('signup');
     })
     .post(function(req, res){
         req.checkBody('name', 'Please choose a display name').len(1, 100);
@@ -117,23 +116,24 @@ app.route('/signup')
 
         var errors = req.validationErrors();
         if (errors) {
-            console.log(errors);
-            res.render('signup', { validationErrors: errors });
-        } else {
-            var user = {
-                name: req.sanitize('name').toString(),
-                email: req.sanitize('email').toString(),
-                password: req.sanitize('password').toString()
-            };
-            db.createUser(user, function(err, result){
-                if (err) {
-                    res.render('signup', { validationErrors: [{ msg: err.message }]});
-                } else {
-                    req.flash('message', 'Your account has been created. Please login below.');
-                    res.redirect('/login');
-                }
-            });
+            return res.render('signup', { validationErrors: errors });
         }
+
+        var user = {
+            name: req.sanitize('name').toString(),
+            email: req.sanitize('email').toString(),
+            password: req.sanitize('password').toString()
+        };
+        db.createUser(user, function(err, result){
+            if (err) {
+                return res.render('signup', { validationErrors: [{ msg: err.message }]});
+            }
+            user.id = result.id;
+            return req.login(user, function(err){
+                if (err) return res.render('error');
+                return res.redirect('/');
+            });
+        });
     });
 
 app.listen(process.env.PORT || 3000);
