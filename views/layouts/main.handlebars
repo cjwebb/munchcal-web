@@ -32,6 +32,8 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
+            <li><a href="/">Calendar</a></li>
+            <li><a href="/recipes">Recipes</a></li>
             {{#if user}}<li class=""><a href="/logout">Logout</a></li>{{/if}}
           </ul>
           {{#if user}}<p class="navbar-text navbar-right">Signed in as {{user.name}}</p>{{/if}}
@@ -44,7 +46,7 @@
     </div>
     <footer class="footer">
       <div class="container">
-        <p class="text-muted">This website is in public alpha. For more information, please contact <a href="https://twitter.com/colinjwebb">&#64;colinjwebb</a></p>
+        <p class="text-muted">MunchCal is in public alpha. For more information, please contact <a href="https://twitter.com/colinjwebb">&#64;colinjwebb</a></p>
       </div>
     </footer>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
@@ -53,5 +55,4 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
   </body>
 </html>
-
 

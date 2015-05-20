@@ -20,12 +20,29 @@ var routes       = require('./app/routes');
 var config       = require('./config.js');
 
 // handlebars helpers
+//http://funkjedi.com/technology/412-every-nth-item-in-handlebars/
+var groupedEach = function(every, context, options) {
+    var out = "", subcontext = [], i;
+    if (context && context.length > 0) {
+        for (i = 0; i < context.length; i++) {
+            if (i > 0 && i % every === 0) {
+                out += options.fn(subcontext);
+                subcontext = [];
+            }
+            subcontext.push(context[i]);
+        }
+        out += options.fn(subcontext);
+    }
+    return out;
+};
+
 var hbs = exphbs.create({
     defaultLayout: 'main',
     helpers: {
         "formatDate": function(format, datetime) {
             return moment(datetime.fn(this), config.calendarFormat).format(format);
-        }
+        },
+        "groupedEach": groupedEach
     }
 });
 
@@ -87,6 +104,7 @@ app.get('/', checkAuthentication, routes.meals.get);
 app.post('/', checkAuthentication, routes.meals.post);
 app.get('/meals/:date', checkAuthentication, routes.meals.get);
 app.post('/meals/:date', checkAuthentication, routes.meals.post);
+app.get('/recipes', checkAuthentication, routes.recipes.get);
 
 // login/logout user
 app.route('/login')

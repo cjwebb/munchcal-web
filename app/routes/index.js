@@ -1,6 +1,7 @@
 "use strict"
 
 module.exports = {
-    meals: require('./meals')
+    meals: require('./meals'),
+    recipes: require('./recipes')
 }
 

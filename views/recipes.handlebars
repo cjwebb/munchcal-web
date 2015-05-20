@@ -1,0 +1,39 @@
+<div class="page-header">
+    <h1>Recipes</h1>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <form method="get">
+            <div class="form-group">
+                <input type="text" class="form-control" id="q" name="q" placeholder="Search for a recipe e.g. Spaghetti Carbonara" {{#if q}}value="{{q}}"{{/if}} autofocus onfocus="this.value=this.value;">
+            </div>
+        </form>
+    </div>
+</div>
+
+{{#if resultsMessage}}
+    <div class="row">
+        <div class="col-md-12">
+        <p>{{resultsMessage}}</p>
+        </div>
+    </div>
+{{/if}}
+
+{{#groupedEach 3 data}}
+    <div class="row">
+    {{#each this}}
+        <div class="col-xs-12 col-md-4">
+            <h3>{{name}}{{#if author}} <small>by {{author.name}}</small>{{/if}}</h3>
+            <img class="img-responsive" src="{{ image.url }}"/>
+<h5>Ingredients:</h5>
+            <ul class="list-unstyled">
+            {{#each ingredients}}
+            <li>{{name}}</li>
+            {{/each}}
+            </ul>
+        </div>
+    {{/each}}
+    </div>
+{{/groupedEach}}
+

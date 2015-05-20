@@ -14,6 +14,7 @@ module.exports = {
     bcryptWorkFactor: parseInt(getOrExit('MUNCHCAL_BCRYPT_WORK_FACTOR')),
     munchcalApiUrl: getOrExit('MUNCHCAL_API_URL'),
     munchcalParserUrl: getOrExit('MUNCHCAL_PARSER_URL'),
+    munchcalRecipesUrl: getOrExit('MUNCHCAL_RECIPES_URL'),
     calendarFormat: 'YYYY-MM-DD'
 };
 
