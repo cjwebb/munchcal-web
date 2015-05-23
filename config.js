@@ -15,6 +15,7 @@ module.exports = {
     munchcalApiUrl: getOrExit('MUNCHCAL_API_URL'),
     munchcalParserUrl: getOrExit('MUNCHCAL_PARSER_URL'),
     munchcalRecipesUrl: getOrExit('MUNCHCAL_RECIPES_URL'),
-    calendarFormat: 'YYYY-MM-DD'
+    calendarFormat: 'YYYY-MM-DD',
+    defaultRecipeImage: '/placeholder-448x256.png'
 };
 

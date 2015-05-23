@@ -1,7 +1,15 @@
 "use strict"
 
 var request = require('request'),
+    _       = require('lodash'),
     config  = require('../../config.js');
+
+var addDefaultImage = function(recipe){
+    if (!_.has(recipe, 'image.url')) {
+        _.set(recipe, 'image.url', config.defaultRecipeImage);
+    }
+    return recipe;
+}
 
 exports.get = function(req, res) {
     req.sanitize('q').trim();
@@ -15,6 +23,7 @@ exports.get = function(req, res) {
             return res.status(500).render('error');
         }
 
+        body.data = _.map(body.data, addDefaultImage);
         body.q = req.query.q;
         if (body.data.length < 1) {
             body.resultsMessage = "No recipes found";
