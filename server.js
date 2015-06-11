@@ -104,7 +104,8 @@ app.get('/', checkAuthentication, routes.meals.get);
 app.post('/', checkAuthentication, routes.meals.post);
 app.get('/meals/:date', checkAuthentication, routes.meals.get);
 app.post('/meals/:date', checkAuthentication, routes.meals.post);
-app.get('/recipes', checkAuthentication, routes.recipes.get);
+app.get('/recipes', checkAuthentication, routes.recipes.search);
+app.get('/recipes/:id', checkAuthentication, routes.recipes.get)
 
 // login/logout user
 app.route('/login')

@@ -11,7 +11,7 @@ var addDefaultImage = function(recipe){
     return recipe;
 }
 
-exports.get = function(req, res) {
+exports.search = function(req, res) {
     req.sanitize('q').trim();
     if (!req.query.q) {
         return res.render('recipes');
@@ -30,5 +30,17 @@ exports.get = function(req, res) {
         }
         return res.render('recipes', body);
     });
-}
+};
+
+exports.get = function(req, res){
+    var url = config.munchcalRecipesUrl + "/recipes/" + req.params.id;
+    request.get({ url:url, json:true }, function(err, resp, body){
+        if (err || resp.statusCode != 200){
+            return res.status(500).render('error');
+        }
+
+        body.data = _.map(body.data, addDefaultImage);
+        return res.render('recipesDetail', body);
+    });
+};
 

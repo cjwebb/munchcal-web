@@ -1,0 +1,20 @@
+{{#each data}}
+    <div class="page-header"><h1>{{ name }}{{#if author}} <small>by {{author.name}}</small>{{/if}}</h1></div>
+
+    <div class="row">
+        <div class="col-xs-12 col-md-12">
+            <img class="img-responsive" src="{{ image.url }}"/>
+            {{#if source.url }}
+            <h5>Original recipe via <a href="{{ source.url }}">{{ source.name }}</a>
+            {{/if}}
+            <h5>Ingredients:</h5>
+            <ul class="list-unstyled">
+            {{#each ingredients}}
+            <li>{{name}}</li>
+            {{/each}}
+            </ul>
+        </div>
+    </div>
+{{/each}}
+
+

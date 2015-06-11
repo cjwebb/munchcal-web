@@ -24,10 +24,10 @@
     <div class="row">
     {{#each this}}
         <div class="col-xs-12 col-md-4">
-            <h3>{{name}}{{#if author}} <small>by {{author.name}}</small>{{/if}}</h3>
+            <h3><a href="/recipes/{{id}}">{{name}}</a>{{#if author}} <small>by {{author.name}}</small>{{/if}}</h3>
             <img class="img-responsive" src="{{ image.url }}"/>
 <h5>Ingredients:</h5>
-            <ul class="list-unstyled">
+            <ul class="list-unstyled csv-list">
             {{#each ingredients}}
             <li>{{name}}</li>
             {{/each}}
